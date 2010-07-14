@@ -1,6 +1,6 @@
 # clj-marc
 
-Clj-marc is a Clojure library to parse Ex Libris ALEPH seqential MARC export.
+Clj-marc is a Clojure library to parse Ex Libris ALEPH seqential MARC exports.
 
 ## Usage
 
