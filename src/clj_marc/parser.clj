@@ -39,7 +39,7 @@
 (defn parse
   "Parses and loads the source s which is a File. Returns a Lazy Sequence
   of records which are vectors of clj-marc/marc-record-field with keys :field,
-  :ind1, :ind2 and :data."
+  :ind1, :ind2 and :subfields."
   [s]
   (startparse s))
 
@@ -68,8 +68,8 @@
 	res (filter #(= (:field %) field) rec)
 	values  (map #(marc-data % includes excludes) res)]
     (cond
-     (= ind 1) (:ind1 res)
-     (= ind 2) (:ind2 res)
+     (= ind 1) (:ind1 (first res))
+     (= ind 2) (:ind2 (first res))
      (not (nil? pos)) (.substring (str-join "; " values) (get pos 0) (get pos 1))
      (or as_string (not as_list)) (str-join "; " values)
      true values)))
