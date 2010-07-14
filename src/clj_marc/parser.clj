@@ -12,8 +12,8 @@
 
 (defn- marc-subfields
   [line] ; "$$aData1$$bData2..." or "Data1"
-  (let [parts  (re-partition #"\$\$." line) ; ("Data1" "$$a" "Data2" "$$b" "Data3"...)
-        subfs  (concat (vector "_" (first parts)) (map #(re-sub #"\$\$" "" %) (rest parts)))] ; ("_" "Data1" "a" "Data3" "b" "Data3" ...)
+  (let [parts  (cons "$$_" (re-partition #"\$\$." line)) ; ("$$_" "Data1" "$$a" "Data2" "$$b" "Data3"...)
+        subfs  (map #(re-sub #"\$\$" "" %) parts)] ; ("_" "Data1" "a" "Data3" "b" "Data3" ...)
    (partition 2 subfs))) ; (["_" "Data1"] ["a" "Data2"] ["b" "Data3"])
 
 (defn- marc-line
