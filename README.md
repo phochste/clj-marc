@@ -13,15 +13,15 @@ Other options:
 	=> "Propositional structure and illocutionary force : a study of the contribution of sentence meaning to speech acts / Jerrold J. Katz."
 	(rec "245" :includes ["c"]) 
 	=> "Jerrold J. Katz."
-        (rec "245" :excludes ["a" "b"]) 
+	(rec "245" :excludes ["a" "b"]) 
 	=> "Jerrold J. Katz."
-        (rec "852") 
+	(rec "852") 
 	=> "LW01 L27 L27.18M201 Dept. LW01 L27; LW06 ....; LW11 ...; LW09 ..."
-        (rec "852" :includes ["b"] :as_list true) 
+	(rec "852" :includes ["b"] :as_list true) 
 	=> ("LW01" "LW06" "LW11" "LW09")
 	(rec "008" :pos [7 11]) 
 	=> "1977"
-        (rec "245" :ind 1)
+	(rec "245" :ind 1)
 	=> 1
 
 ## License
