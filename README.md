@@ -4,18 +4,18 @@ Clj-marc is a Clojure library to parse Ex Libris ALEPH seqential MARC export.
 
 ## Usage
 
-(use 'clj-marc.parser)
-(doseq [rec (marc-seq (parse "data/rug01.export"))] (println (rec "245")))
+	(use 'clj-marc.parser)
+	(doseq [rec (marc-seq (parse "data/rug01.export"))] (println (rec "245")))
 
 Other options:
 
-(rec "245")  -> "Data2 Data3 Data4"
-(rec "008" :pos [7 11]) -> "1977"
-(rec "245" :subfield ["b" "c"]) -> "Data3 Data4"
-(rec "245" :except  ["b"]) -> "Data2 Data4 ..." 
-(rec "245" :ind 1) -> "5"
-(rec "245" :as_list true) -> ["Data2" "Data3" "Data4" ...]
-(rec "245" :as_string true) -> "Data2 Data3 Data4 ...
+	(rec "245")  -> "Data2 Data3 Data4"
+	(rec "008" :pos [7 11]) -> "1977"
+	(rec "245" :subfield ["b" "c"]) -> "Data3 Data4"
+	(rec "245" :except  ["b"]) -> "Data2 Data4 ..." 
+	(rec "245" :ind 1) -> "5"
+	(rec "245" :as_list true) -> ["Data2" "Data3" "Data4" ...]
+	(rec "245" :as_string true) -> "Data2 Data3 Data4 ...
 
 ## License
 
