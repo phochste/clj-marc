@@ -85,8 +85,8 @@
 
 ;; (rec "245")  -> "Data2 Data3 Data4"
 ;; (rec "008" :pos [7 11]) -> "1977"
-;; (rec "245" :subfield ["b" "c"]) -> "Data3 Data4"
-;; (rec "245" :except  ["b"]) -> "Data2 Data4 ..." 
+;; (rec "245" :includes ["b" "c"]) -> "Data3 Data4"
+;; (rec "245" :excludes  ["b"]) -> "Data2 Data4 ..." 
 ;; (rec "245" :ind 1) -> "5"
 ;; (rec "245" :as_list true) -> ["Data2" "Data3" "Data4" ...]
 ;; (rec "245" :as_string true) -> "Data2 Data3 Data4 ..."
