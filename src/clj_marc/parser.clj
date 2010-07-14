@@ -38,7 +38,7 @@
 
 (defn parse
   "Parses and loads the source s which is a File. Returns a Lazy Sequence
-  of records which are vectors of marc.parser/field with keys :field,
+  of records which are vectors of clj-marc/marc-record-field with keys :field,
   :ind1, :ind2 and :data."
   [s]
   (startparse s))
