@@ -1,6 +1,6 @@
 # clj-marc
 
-Clj-marc is a Clojure library to parse Ex Libris ALEPH sequential MARC exports.
+Clj-marc is a Clojure library to parse MARC21 and Ex Libris ALEPH sequential MARC exports.
 
 ## Usage
 
@@ -9,6 +9,10 @@ Clj-marc is a Clojure library to parse Ex Libris ALEPH sequential MARC exports.
 
 Other options:
 
+        (parse "data/rug01.export" :aleph)
+	=> returns a Aleph sequential parser
+	(parse "data/loc.export" :marc21)
+	-> returns a MARC21 parser
 	(rec "245")  
 	=> "Propositional structure and illocutionary force : a study of the contribution of sentence meaning to speech acts / Jerrold J. Katz."
 	(rec "245" :includes [:c]) 

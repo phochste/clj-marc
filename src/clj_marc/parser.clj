@@ -1,47 +1,20 @@
-;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@gmail.com>
+;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@ugent.be>
 (ns 
     clj-marc.parser
+  (:require [clj-marc aleph marc21])
   (:use [clojure.contrib.str-utils])
   (:use [clojure.contrib.duck-streams :only (reader)]))
-
-(defstruct marc-record-field :field :ind1 :ind2 :subfields)
-
-(defn- marc-boundary?
-  [line]
-  (not (nil? (re-matches #"^[0-9]{9} FMT.*" line))))
-
-(defn- marc-subfields
-  [line] ; "$$aData2$$bData3..." or "Data1"
-  (let [parts  (cons "$$_" (re-partition #"\$\$." line)) ; ("$$_" "Data1" "$$a" "Data2" "$$b" "Data3"...)
-        subfs  (map #(if (.startsWith % "$$") (keyword (.substring % 2)) %) parts)] ; (:_ "Data1" :a "Data2" :b "Data3" ...)
-   (partition 2 subfs))) ; ([:_ "Data1"] [:a "Data2"] [:b "Data3"])
-
-(defn- marc-line
-  [line]
-  (let [id        (.substring line 0 9)
-	field     (.substring line 10 13)
-	ind1      (.substring line 13 14)
-	ind2      (.substring line 14 15)
-	subfields (marc-subfields (.substring line 18))]
-    (struct marc-record-field field ind1 ind2 subfields)))
-
-(defn contenthandler
-  [records]
-  (map #(for [line %] (marc-line line)) records))     ; Map record into marc-records-fields
-
-(defn startparse
-  [s]
-  (let [lst (line-seq (reader s))                     ; Read all lines
-	parts (partition-by marc-boundary? lst)       ; Split lines into records (header + body) 
-	records (map flatten (partition 2 parts))]    ; Join the head + body into a record
-    (contenthandler records)))
 
 (defn parse
   "Parses and loads the source s which is a File. Returns a Lazy Sequence
   of records which are vectors of clj-marc/marc-record-field with keys :field,
   :ind1, :ind2 and :subfields."
-  [s]
-  (startparse s))
+  ([s] (parse s :aleph))
+  ([s type]
+     (cond
+      (= :aleph type) (clj-marc.aleph/parse s)
+      (= :marc21 type) (clj-marc.marc21/parse s)
+      true (clj-marc.aleph/parse s))))
 
 ;; ACCESSORS
 (defn- marc-include-filter [includes subfields]
@@ -79,7 +52,8 @@
 
 ;; Example
 ;; (use 'clj-marc.parser)
-;; (def records (parse "data/rug01.export"))
+;; (def records (parse "data/rug01.export" :aleph))
+;; (def records (parse "data/loc.export" :marc21))
 ;; (def my-seq (marc-seq records))
 ;; (doseq [rec my-seq] (println (rec "245")))
 
