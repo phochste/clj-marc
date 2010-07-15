@@ -11,10 +11,10 @@
   (not (nil? (re-matches #"^[0-9]{9} FMT.*" line))))
 
 (defn- marc-subfields
-  [line] ; "$$aData1$$bData2..." or "Data1"
+  [line] ; "$$aData2$$bData3..." or "Data1"
   (let [parts  (cons "$$_" (re-partition #"\$\$." line)) ; ("$$_" "Data1" "$$a" "Data2" "$$b" "Data3"...)
-        subfs  (map #(re-sub #"\$\$" "" %) parts)] ; ("_" "Data1" "a" "Data3" "b" "Data3" ...)
-   (partition 2 subfs))) ; (["_" "Data1"] ["a" "Data2"] ["b" "Data3"])
+        subfs  (map #(if (.startsWith % "$$") (keyword (.substring % 2)) %) parts)] ; (:_ "Data1" :a "Data2" :b "Data3" ...)
+   (partition 2 subfs))) ; ([:_ "Data1"] [:a "Data2"] [:b "Data3"])
 
 (defn- marc-line
   [line]
@@ -72,7 +72,7 @@
      (= ind 2) (:ind2 (first res))
      (not (nil? pos)) (.substring (str-join "; " values) (get pos 0) (get pos 1))
      (or as_string (not as_list)) (str-join "; " values)
-     true values)))
+     true (apply vector values))))
 
 (defn marc-seq [records]
   (for [rec records] (partial marc rec)))
@@ -85,8 +85,8 @@
 
 ;; (rec "245")  -> "Data2 Data3 Data4"
 ;; (rec "008" :pos [7 11]) -> "1977"
-;; (rec "245" :includes ["b" "c"]) -> "Data3 Data4"
-;; (rec "245" :excludes  ["b"]) -> "Data2 Data4 ..." 
+;; (rec "245" :includes [:b :c]) -> "Data3 Data4"
+;; (rec "245" :excludes  [:b]) -> "Data2 Data4 ..." 
 ;; (rec "245" :ind 1) -> "5"
 ;; (rec "245" :as_list true) -> ["Data2" "Data3" "Data4" ...]
 ;; (rec "245" :as_string true) -> "Data2 Data3 Data4 ..."
