@@ -1,7 +1,7 @@
 ;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@ugent.be>
 (ns 
     clj-marc.parser
-  (:require [clj-marc aleph marc21])
+  (:require [clj-marc aleph marc4j])
   (:use [clojure.contrib.str-utils])
   (:use [clojure.contrib.duck-streams :only (reader)]))
 
@@ -10,10 +10,11 @@
   of records which are vectors of clj-marc/marc-record-field with keys :field,
   :ind1, :ind2 and :subfields."
   ([s] (parse s :aleph))
-  ([s type]
+  ([s type & args]
      (cond
       (= :aleph type) (clj-marc.aleph/parse s)
-      (= :marc21 type) (clj-marc.marc21/parse s)
+      (= :marc21 type) (clj-marc.marc4j/parse s :marc21)
+      (= :marcxml type) (clj-marc.marc4j/parse s :marcxml)
       true (clj-marc.aleph/parse s))))
 
 ;; ACCESSORS

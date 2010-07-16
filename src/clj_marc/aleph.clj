@@ -25,11 +25,11 @@
 	subfields (marc-subfields (.substring line 18))]
     (struct marc-record-field field ind1 ind2 subfields)))
 
-(defn contenthandler
+(defn- contenthandler
   [record]
   (for [line record] (marc-line line)))               ; Map record into marc-records-fields
 
-(defn startparse
+(defn- startparse
   [s]
   (let [lst (line-seq (reader s))                     ; Read all lines
 	parts (partition-by marc-boundary? lst)       ; Split lines into records (header + body) 
