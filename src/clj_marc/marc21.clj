@@ -9,7 +9,6 @@
 (defstruct marc-directory :tag :start :end)
 
 (defn- parse-integer
-  "Returns an Integer given a String"
   [^String str]
   (try (Integer/parseInt str)
        (catch NumberFormatException nfe 0)))
@@ -49,7 +48,7 @@
     (for [elm directory]
       (let [fdata       (.substring data (:start elm) (:end elm))
 	    field      (:tag elm)
-	    ctrl?      (re-matches #"^00." field)
+	    ctrl?      (.startsWith field "00")
 	    ind1       (.substring fdata 0 1)
 	    ind2       (.substring fdata 1 2)
 	    subfields  (marc-subfields (if ctrl? fdata (.substring fdata 2)))]

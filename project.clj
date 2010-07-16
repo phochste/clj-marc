@@ -1,5 +1,5 @@
-(defproject clj-marc "0.0.1-SNAPSHOT"
-  :description "An Aleph sequential MARC parser"
+(defproject clj-marc "0.1.0-SNAPSHOT"
+  :description "A MARC parser. Supports line-mode MARC21 and Aleph sequential"
   :url "http://github.com/phochste/clj-marc"
   :dev-dependencies [[swank-clojure "1.2.1"]]
   :dependencies [[org.clojure/clojure "1.2.0-master-SNAPSHOT"]
