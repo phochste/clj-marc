@@ -1,5 +1,5 @@
 ;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@ugen.be>
-(ns 
+(ns ^{:doc "An Aleph sequential MARC parser" :author "Patrick Hochstenbach"}
     clj-marc.aleph
   (:use [clojure.contrib.str-utils])
   (:use [clojure.contrib.duck-streams :only (reader)]))\
@@ -40,5 +40,5 @@
   "Parses and loads the source s which is a File. Returns a Lazy Sequence
   of records which are vectors of clj-marc/marc-record-field with keys :field,
   :ind1, :ind2 and :subfields."
-  [s]
+  [s & args]
   (startparse s))

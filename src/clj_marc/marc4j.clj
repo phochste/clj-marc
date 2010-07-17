@@ -1,5 +1,5 @@
 ;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@ugent.be>
-(ns 
+(ns ^{:doc "A wrapper around Marc4j for parsing MARC21/MARCXML documents" :author "Patrick Hochstenbach"}
     clj-marc.marc4j
   (:import (java.io FileInputStream))
   (:import (org.marc4j MarcStreamReader MarcXmlReader MarcReader))
@@ -14,18 +14,18 @@
   (when (.hasNext reader)
     (cons (.next reader) (lazy-seq (marc4j-seq reader)))))
 
-(defmulti parse-field class)
+(defmulti #^{:private true} parse-field class)
 
-(defmethod parse-field Leader [x]
+(defmethod #^{:private true} parse-field Leader [x]
   (let [subfields (list (list :_ (.marshal x)))]
     (struct marc-record-field "LDR" " " " " subfields)))    	     
 
-(defmethod parse-field ControlField [x]
+(defmethod #^{:private true} parse-field ControlField [x]
   (let [tag (.getTag x)
 	subfields (list (list :_ (.getData x)))]
     (struct marc-record-field tag " " " " subfields)))
 
-(defmethod parse-field DataField [x]
+(defmethod #^{:private true} parse-field DataField [x]
    (let [tag       (.getTag x)
 	 ind1      (str (.getIndicator1 x))
 	 ind2      (str (.getIndicator2 x))
@@ -50,8 +50,10 @@
     (for [record records] (contenthandler record))))
 
 (defn parse
-  "Parses and loads the source s which is a File. Returns a Lazy Sequence
+  "Parses and loads the source s which is a File. The second argument should be
+  the file format (:marc21 or :marcxml). Returns a Lazy Sequence
   of records which are vectors of clj-marc/marc-record-field with keys :field,
   :ind1, :ind2 and :subfields."
-  [s format]
-  (startparse s format))
+  [s & args]
+  (let [format (first args)]
+    (startparse s format)))
