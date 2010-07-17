@@ -2,7 +2,7 @@
 (ns ^{:doc "A Clojure MARC parser" :author "Patrick Hochstenbach"}
     clj-marc.parser
   (:require [clj-marc aleph marc4j])
-  (:use [clojure.contrib.str-utils])
+  (:use [clojure.contrib.str-utils :only (re-sub str-join)])
   (:use [clojure.contrib.duck-streams :only (reader)]))
 
 (defn parse

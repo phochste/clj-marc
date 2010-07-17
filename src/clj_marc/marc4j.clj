@@ -4,10 +4,8 @@
   (:import (java.io FileInputStream))
   (:import (org.marc4j MarcStreamReader MarcXmlReader MarcReader))
   (:import (org.marc4j.marc Record Leader DataField ControlField))
-  (:use [clojure.contrib.str-utils])
-  (:use [clojure.contrib.duck-streams :only (reader)]))
-
-(defstruct marc-record-field :field :ind1 :ind2 :subfields)
+  (:use [clojure.contrib.duck-streams :only (reader)])
+  (:use [clj-marc.defs]))
 
 (defn- marc4j-seq
   [^MarcReader reader]

@@ -1,10 +1,9 @@
 ;; (c) 2010 Patrick Hochstenbach <patrick.hochstenbach@ugen.be>
 (ns ^{:doc "An Aleph sequential MARC parser" :author "Patrick Hochstenbach"}
     clj-marc.aleph
-  (:use [clojure.contrib.str-utils])
-  (:use [clojure.contrib.duck-streams :only (reader)]))\
-
-(defstruct marc-record-field :field :ind1 :ind2 :subfields)
+  (:use [clojure.contrib.str-utils :only (re-partition)])
+  (:use [clojure.contrib.duck-streams :only (reader)])
+  (:use [clj-marc.defs]))
 
 (defn- marc-boundary?
   [line]
