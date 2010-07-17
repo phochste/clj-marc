@@ -2,4 +2,4 @@
 (use 'clj-marc.parser)
 (def records (parse "data/loc.export" :marc21))
 (def my-seq (marc-seq records))
-(time (doall (doseq [rec my-seq] (println (rec "245")))))
+(time (doseq [rec my-seq] (println (rec "245"))))
