@@ -1,3 +1,5 @@
+We migrated to https://codeberg.org/phochste/clj-marc
+
 # clj-marc
 
 Clj-marc is a Clojure library to parse MARC21, MARCXML and Ex Libris ALEPH sequential MARC exports.
